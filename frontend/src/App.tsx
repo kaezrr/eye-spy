@@ -1,5 +1,13 @@
+import { Navbar } from "./components/Navbar";
+import { Display } from "./components/Display";
+
 function App() {
-  return <h1 className="text-amber-500">Hello World!!</h1>;
+  return (
+    <div className="flex flex-col">
+      <Navbar />
+      <Display src="/space.jpeg" alt="image" />
+    </div>
+  );
 }
 
 export default App;
