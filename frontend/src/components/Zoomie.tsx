@@ -1,18 +1,28 @@
+import { Finder } from "./Finder";
+
 type PropType = {
   pos: { x: number; y: number };
   out?: boolean;
+  spawnForm: boolean;
   zoom?: number;
   magnifierSize?: number;
+  setMarker: (pos: { x: number; y: number }) => void;
 };
 
-export function Zoomie({ pos, out, zoom = 2, magnifierSize = 100 }: PropType) {
+export function Zoomie({
+  pos,
+  out,
+  spawnForm,
+  setMarker,
+  zoom = 2,
+  magnifierSize = 150,
+}: PropType) {
   return (
     <div
       className={`
         absolute border-2 border-black
         bg-[url('/space.jpeg')]
-        pointer-events-none rounded-xl 
-        bg-no-repeat
+        rounded-full bg-no-repeat
       `}
       style={{
         width: `${magnifierSize}px`,
@@ -22,6 +32,8 @@ export function Zoomie({ pos, out, zoom = 2, magnifierSize = 100 }: PropType) {
         backgroundPosition: `${-pos.x * zoom + magnifierSize / 2}px ${-pos.y * zoom + magnifierSize / 2}px`,
         backgroundSize: `${window.innerWidth * zoom}px auto`,
       }}
-    ></div>
+    >
+      {spawnForm && <Finder pos={pos} setMarker={setMarker} />}
+    </div>
   );
 }
