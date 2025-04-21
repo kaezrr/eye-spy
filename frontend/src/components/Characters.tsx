@@ -1,5 +1,5 @@
 export function Characters() {
-  // TODO: Get characters left from the backend
+  // TODO: Get hidden characters from the backend
   const characters = ["Waldo", "Woof", "Wenda", "Whitebeard", "Odlaw"];
 
   return (

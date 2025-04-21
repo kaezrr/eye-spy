@@ -18,7 +18,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="sticky top-0 flex gap-1 items-center bg-blue-950 w-full justify-between text-amber-50 px-4 py-3 text-lg">
+    <nav className="sticky top-0 flex gap-1 items-center bg-blue-950 w-full justify-between text-amber-50 px-4 py-3 text-lg z-50">
       <h1 className="flex items-center gap-2 text-2xl font-bold">
         Eye Spy <FaEye />
       </h1>
