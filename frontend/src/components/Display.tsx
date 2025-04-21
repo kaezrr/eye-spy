@@ -21,7 +21,7 @@ export function Display({ src, alt = "" }: PropTypes) {
 
   return (
     <div
-      className="w-full h-full relative cursor-none"
+      className="w-full h-full relative cursor-none overflow-hidden"
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setOut(true)}
