@@ -5,8 +5,8 @@ export function Marker({ pos }: { pos: { x: number; y: number } }) {
     <FaMapMarkerAlt
       className="absolute size-10 text-red-700 "
       style={{
-        top: `${pos.y}px`,
-        left: `${pos.x}px`,
+        top: `${pos.y - 40}px`,
+        left: `${pos.x - 40}px`,
       }}
     />
   );

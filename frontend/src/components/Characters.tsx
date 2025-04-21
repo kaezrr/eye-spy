@@ -1,6 +1,13 @@
+import { getCharacters } from "../Logic";
+import { useEffect, useState } from "react";
+
 export function Characters() {
-  // TODO: Get hidden characters from the backend
-  const characters = ["Waldo", "Woof", "Wenda", "Whitebeard", "Odlaw"];
+  const [characters, setCharacters] = useState<string[]>([]);
+  useEffect(() => {
+    getCharacters().then((res) => {
+      setCharacters(res);
+    });
+  }, []);
 
   return (
     <div className="absolute flex flex-col overflow-y-scroll overflow-x-hidden h-[calc(100vh-100%)] top-full right-0 bg-blue-950">

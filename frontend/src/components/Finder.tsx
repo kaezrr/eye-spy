@@ -1,3 +1,7 @@
+import { useNavigate } from "react-router-dom";
+import { checkPosition, getCharacters, hasWon } from "../Logic";
+import { useState, useEffect } from "react";
+
 export function Finder({
   pos,
   setMarker,
@@ -5,13 +9,26 @@ export function Finder({
   pos: { x: number; y: number };
   setMarker: (pos: { x: number; y: number }) => void;
 }) {
-  // TODO: Get characters from backend
-  const characters = ["Waldo", "Woof", "Wenda", "Whitebeard", "Odlaw"];
-  const handleOnClick = (e: React.MouseEvent) => {
-    alert(
-      `You found ${(e.currentTarget as HTMLElement).innerText} at ${JSON.stringify(pos)}`,
-    );
-    setMarker(pos);
+  const navigate = useNavigate();
+  const [characters, setCharacters] = useState<string[]>([]);
+  useEffect(() => {
+    getCharacters().then((res) => {
+      setCharacters(res);
+    });
+  }, []);
+
+  const handleOnClick = async (e: React.MouseEvent) => {
+    const who = (e.currentTarget as HTMLElement).innerText;
+    const res = await checkPosition(who, pos);
+    if (res) {
+      alert(`You found ${who}!!!`);
+      setMarker(pos);
+      if (hasWon()) {
+        navigate("/scores");
+      }
+    } else {
+      alert(`You did not find ${who}...`);
+    }
   };
 
   return (

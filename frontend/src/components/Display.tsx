@@ -44,10 +44,10 @@ export function Display({ src, alt = "" }: PropTypes) {
       onClick={() => setSpawn((s) => !s)}
     >
       <img src={src} alt={alt} />
-      <Zoomie pos={pos} out={out} spawnForm={spawn} setMarker={handleSet} />
       {markers.map((e: { x: number; y: number }, i) => (
         <Marker key={i} pos={e} />
       ))}
+      <Zoomie pos={pos} out={out} spawnForm={spawn} setMarker={handleSet} />
     </div>
   );
 }
