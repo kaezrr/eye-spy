@@ -2,11 +2,14 @@ import { Navbar } from "../components/Navbar";
 import { Display } from "../components/Display";
 import { useEffect } from "react";
 import { startUser } from "../Logic";
+import { useParams } from "react-router-dom";
 
 function App() {
   useEffect(() => {
     startUser();
   }, []);
+
+  const { mapId } = useParams();
 
   return (
     <div className="flex flex-col">

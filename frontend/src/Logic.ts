@@ -48,18 +48,6 @@ export async function getMaps() {
       id: 3,
       name: "Dinosaurs, Spacemen And Ghouls",
     },
-    {
-      id: 4,
-      name: "A Tremendous Song And Dance",
-    },
-    {
-      id: 5,
-      name: "Shhh! This Is A Silent Movie",
-    },
-    {
-      id: 6,
-      name: "The Swashbuckling Musketeers",
-    },
   ];
 }
 

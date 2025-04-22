@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
-import { Zoomie } from "./Zoomie";
-import { Marker } from "./Marker";
-import { useParams } from "react-router-dom";
+import { FaLocationPin } from "react-icons/fa6";
+import { ImageWrapper } from "./ImageWrapper";
+import { Finder } from "./Finder";
 
 type Position = {
   x: number;
@@ -9,44 +9,49 @@ type Position = {
 };
 
 export function Display() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState<Position>({ x: 0, y: 0 });
-  const [out, setOut] = useState(false);
-  const [spawn, setSpawn] = useState(false);
+  const imgRef = useRef<HTMLDivElement>(null);
   const [markers, setMarkers] = useState<Position[]>([]);
+  const [spawnForm, setSpawnForm] = useState<Position | false>(false);
 
-  const { mapId } = useParams();
-  const src = `/${mapId}.jpeg`;
+  const handleClick = (e: React.MouseEvent) => {
+    if (spawnForm) {
+      setSpawnForm(false);
+      return;
+    }
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (spawn) return;
-    const rect = containerRef.current?.getBoundingClientRect();
+    const rect = imgRef.current?.getBoundingClientRect();
     if (!rect) return;
+
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setPos({ x, y });
+
+    const normX = Math.round((x * 1000) / rect.width);
+    const normY = Math.round((y * 1000) / rect.height);
+    setSpawnForm({ x: normX / 10, y: normY / 10 });
   };
 
-  const handleSet = (ps: { x: number; y: number }) => {
-    const temp = Array.from(markers);
-    temp.push(ps);
-    setMarkers(temp);
+  const addMarker = (pos: Position) => {
+    const newMarkers = [...markers];
+    newMarkers.push(pos);
+    setMarkers(newMarkers);
   };
 
   return (
-    <div
-      className={`w-full h-full relative ${spawn ? "" : "cursor-none"} overflow-hidden`}
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setOut(true)}
-      onMouseEnter={() => setOut(false)}
-      onClick={() => setSpawn((s) => !s)}
-    >
-      <img src={src} />
-      {markers.map((e: { x: number; y: number }, i) => (
-        <Marker key={i} pos={e} />
-      ))}
-      <Zoomie pos={pos} out={out} spawnForm={spawn} setMarker={handleSet} />
+    <div className="h-[92vh] w-full overflow-scroll bg-indigo-950 object-cover">
+      <ImageWrapper ref={imgRef} onClick={handleClick}>
+        {markers.map((m) => (
+          <FaLocationPin
+            className="absolute text-red-600 -translate-x-1/2 -translate-y-full"
+            style={{
+              top: `${m.y}%`,
+              left: `${m.x}%`,
+            }}
+          />
+        ))}
+        {spawnForm !== false && (
+          <Finder pos={spawnForm} createMarker={addMarker} />
+        )}
+      </ImageWrapper>
     </div>
   );
 }

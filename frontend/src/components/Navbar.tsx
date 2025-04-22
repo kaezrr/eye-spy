@@ -3,7 +3,7 @@ import { FaAngleDown, FaEye, FaAngleUp } from "react-icons/fa";
 import { Characters } from "./Characters";
 import { Link } from "react-router-dom";
 
-export function Navbar({ mapId }: { mapId: string }) {
+export function Navbar() {
   const [time, setTime] = useState(0);
   const [show, setShow] = useState(false);
 
@@ -19,7 +19,7 @@ export function Navbar({ mapId }: { mapId: string }) {
   }, []);
 
   return (
-    <nav className="sticky top-0 flex gap-1 items-center bg-blue-950 w-full justify-between text-amber-50 px-4 py-3 text-lg z-50">
+    <nav className="sticky top-0 flex gap-1 items-center bg-blue-950 w-full box-border h-[8vh] justify-between text-amber-50 px-4 py-3 text-lg z-50">
       <Link to="/">
         <h1 className="flex items-center gap-2 text-2xl font-bold">
           Eye Spy <FaEye />
