@@ -80,27 +80,40 @@ export async function startUser() {
   // });
 }
 
-export async function getLeaderboard(mapId: string) {
+type Score = {
+  name: string;
+  time: number;
+};
+
+type Leaderboard = {
+  name: string;
+  scores: Score[];
+};
+
+export async function getLeaderboard(mapId: string): Promise<Leaderboard> {
   // TODO: get leaderboard from backend according to map
 
-  return [
-    {
-      name: "John",
-      time: 909234235123,
-    },
-    {
-      name: "Mason",
-      time: 909234235123,
-    },
-    {
-      name: "Bogart",
-      time: 909234235123,
-    },
-    {
-      name: "Gray",
-      time: 909234235123,
-    },
-  ];
+  return {
+    name: "The Unfriendly Giants",
+    scores: [
+      {
+        name: "John",
+        time: 909234235123,
+      },
+      {
+        name: "Mason",
+        time: 909234235123,
+      },
+      {
+        name: "Bogart",
+        time: 909234235123,
+      },
+      {
+        name: "Gray",
+        time: 909234235123,
+      },
+    ],
+  };
 
   // await fetch(`${apiUrl}/leaderboard`);
 }
