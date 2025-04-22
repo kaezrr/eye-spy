@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getStatus } from "./Logic";
+import { getStatus } from "../Logic";
 import { Link, useNavigate } from "react-router-dom";
 import { intervalToDuration } from "date-fns";
 

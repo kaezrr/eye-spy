@@ -1,6 +1,6 @@
 import { FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { createUser, getMaps } from "./Logic";
+import { createUser, getMaps } from "../Logic";
 import { useState, useEffect } from "react";
 
 function Home() {

@@ -1,12 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App.tsx";
-import Home from "./Home.tsx";
-import Protected from "./Protected.tsx";
+import App from "./pages/App.tsx";
+import Home from "./pages/Home.tsx";
+import Protected from "./pages/Protected.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Win from "./Win.tsx";
-import Scores from "./Scores.tsx";
+import Win from "./pages/Win.tsx";
+import Scores from "./pages/Scores.tsx";
 
 const router = createBrowserRouter([
   {
