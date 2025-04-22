@@ -1,23 +1,22 @@
 import { useRef, useState } from "react";
 import { Zoomie } from "./Zoomie";
 import { Marker } from "./Marker";
-
-type PropTypes = {
-  src: string;
-  alt?: string;
-};
+import { useParams } from "react-router-dom";
 
 type Position = {
   x: number;
   y: number;
 };
 
-export function Display({ src, alt = "" }: PropTypes) {
+export function Display() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<Position>({ x: 0, y: 0 });
   const [out, setOut] = useState(false);
   const [spawn, setSpawn] = useState(false);
   const [markers, setMarkers] = useState<Position[]>([]);
+
+  const { mapId } = useParams();
+  const src = `/${mapId}.jpeg`;
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (spawn) return;
@@ -43,7 +42,7 @@ export function Display({ src, alt = "" }: PropTypes) {
       onMouseEnter={() => setOut(false)}
       onClick={() => setSpawn((s) => !s)}
     >
-      <img src={src} alt={alt} />
+      <img src={src} />
       {markers.map((e: { x: number; y: number }, i) => (
         <Marker key={i} pos={e} />
       ))}

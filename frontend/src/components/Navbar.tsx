@@ -3,7 +3,7 @@ import { FaAngleDown, FaEye, FaAngleUp } from "react-icons/fa";
 import { Characters } from "./Characters";
 import { Link } from "react-router-dom";
 
-export function Navbar() {
+export function Navbar({ mapId }: { mapId: string }) {
   const [time, setTime] = useState(0);
   const [show, setShow] = useState(false);
 

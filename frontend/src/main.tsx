@@ -5,6 +5,8 @@ import App from "./App.tsx";
 import Home from "./Home.tsx";
 import Protected from "./Protected.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Win from "./Win.tsx";
+import Scores from "./Scores.tsx";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +14,7 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/play",
+    path: "/play/:mapId",
     element: (
       <Protected>
         <App />
@@ -20,10 +22,14 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/scores",
+    path: "/scores/:mapId",
+    element: <Scores />,
+  },
+  {
+    path: "/won",
     element: (
       <Protected>
-        <App />
+        <Win />
       </Protected>
     ),
   },

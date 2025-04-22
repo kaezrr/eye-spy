@@ -1,10 +1,13 @@
 import { getCharacters } from "../Logic";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export function Characters() {
+  const { mapId } = useParams();
   const [characters, setCharacters] = useState<string[]>([]);
+
   useEffect(() => {
-    getCharacters().then((res) => {
+    getCharacters(mapId).then((res) => {
       setCharacters(res);
     });
   }, []);

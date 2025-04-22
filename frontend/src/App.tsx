@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="flex flex-col">
       <Navbar />
-      <Display src="/space.jpeg" alt="image" />
+      <Display />
     </div>
   );
 }

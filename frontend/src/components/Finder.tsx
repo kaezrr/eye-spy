@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { checkPosition, getCharacters, hasWon } from "../Logic";
+import { useNavigate, useParams } from "react-router-dom";
+import { checkPosition, getCharacters, getStatus } from "../Logic";
 import { useState, useEffect } from "react";
 
 export function Finder({
@@ -9,10 +9,12 @@ export function Finder({
   pos: { x: number; y: number };
   setMarker: (pos: { x: number; y: number }) => void;
 }) {
+  const { mapId } = useParams();
+
   const navigate = useNavigate();
   const [characters, setCharacters] = useState<string[]>([]);
   useEffect(() => {
-    getCharacters().then((res) => {
+    getCharacters(mapId).then((res) => {
       setCharacters(res);
     });
   }, []);
@@ -23,8 +25,9 @@ export function Finder({
     if (res) {
       alert(`You found ${who}!!!`);
       setMarker(pos);
-      if (hasWon()) {
-        navigate("/scores");
+      const stat = await getStatus();
+      if (stat.status === "won") {
+        navigate("/won");
       }
     } else {
       alert(`You did not find ${who}...`);
