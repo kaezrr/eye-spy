@@ -3,22 +3,11 @@ import db from "../db";
 
 export async function getLeaderBoard(req: Request, res: Response) {
   const { mapId } = req.params;
-  const leaderBoard = await db.time.findMany({
-    where: { game: { mapId: parseInt(mapId) } },
-    include: {
-      game: {
-        select: {
-          user: { select: { name: true } },
-        },
-      },
-    },
+  const leaderBoard = await db.round.findMany({
+    where: { mapId: parseInt(mapId), finished: true },
+    select: { name: true, time: true },
     orderBy: { time: "asc" },
   });
 
-  const data = leaderBoard.map((e) => ({
-    name: e.game.user.name,
-    time: e.time,
-  }));
-
-  res.json(data);
+  res.json(leaderBoard);
 }
