@@ -37,7 +37,7 @@ function Home() {
           type="text"
           name="name"
           id="name"
-          className="bg-blue-800 rounded-full p-2"
+          className="bg-blue-800 rounded-full p-2 text-center"
           defaultValue={user ?? ""}
           placeholder="Name"
           required
