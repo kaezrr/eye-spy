@@ -13,3 +13,44 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum GameStatus {
+  PLAYING
+  WON
+  NOT_PLAYING
+}
+
+model Map {
+  id      Int      @id @default(autoincrement())
+  name    String
+  answers Answer[]
+  users   User[]
+}
+
+model Answer {
+  id        Int    @id @default(autoincrement())
+  mapId     Int
+  map       Map    @relation(fields: [mapId], references: [id])
+  character String
+  posX      Int
+  posY      Int
+}
+
+model User {
+  id         Int        @id @default(autoincrement())
+  uuid       String     @unique
+  name       String
+  status     GameStatus @default(NOT_PLAYING)
+  started    DateTime
+  times      Time[]
+  mapId      Int?
+  playingMap Map?       @relation(fields: [mapId], references: [id])
+}
+
+model Time {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  time      Int
+}
