@@ -6,9 +6,17 @@ async function main() {
   // Create maps
   await prisma.map.createMany({
     data: [
-      { id: 1, name: "Beach Day" },
-      { id: 2, name: "Space Station" },
-      { id: 3, name: "Medieval Festival" },
+      { id: 1, name: "The Unfriendly Giants", url: "/static/maps/giants.jpeg" },
+      {
+        id: 2,
+        name: "The Underground Hunters",
+        url: "/static/maps/underground.jpeg",
+      },
+      {
+        id: 3,
+        name: "Dinosaurs, Spacemen and Ghouls",
+        url: "/static/maps/space.jpeg",
+      },
     ],
   });
 

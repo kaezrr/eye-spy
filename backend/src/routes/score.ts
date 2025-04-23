@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { getLeaderBoard } from "../controllers/score";
 
 const router = Router();

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import express from "express";
+import cors from "cors";
 
 import userRouter from "./routes/user";
 import gameRouter from "./routes/game";
@@ -7,6 +8,9 @@ import scoreRouter from "./routes/score";
 import mapRouter from "./routes/map";
 
 const app = express();
+
+app.use(cors());
+app.use("/static", express.static("public"));
 
 app.use("/user", userRouter);
 app.use("/game", gameRouter);

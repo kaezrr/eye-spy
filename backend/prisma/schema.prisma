@@ -24,6 +24,7 @@ enum Character {
 
 model Map {
   id      Int      @id @default(autoincrement())
+  url     String   @unique
   name    String
   answers Answer[]
   Game    Game[]
