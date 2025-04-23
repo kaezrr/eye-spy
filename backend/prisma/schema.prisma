@@ -14,43 +14,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum GameStatus {
-  PLAYING
-  WON
-  NOT_PLAYING
+enum Character {
+  WALDO
+  WENDA
+  WOOF
+  WHITEBEARD
+  ODLAW
 }
 
 model Map {
   id      Int      @id @default(autoincrement())
   name    String
   answers Answer[]
-  users   User[]
+  Game    Game[]
 }
 
 model Answer {
-  id        Int    @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   mapId     Int
-  map       Map    @relation(fields: [mapId], references: [id])
-  character String
+  map       Map       @relation(fields: [mapId], references: [id])
+  character Character
   posX      Int
   posY      Int
 }
 
+model Game {
+  id              Int         @id @default(autoincrement())
+  createdAt       DateTime    @default(now())
+  charactersFound Character[]
+  userId          Int
+  user            User        @relation(fields: [userId], references: [id])
+  mapId           Int
+  map             Map?        @relation(fields: [mapId], references: [id])
+  finished        Boolean     @default(false)
+  Time            Time[]
+}
+
 model User {
-  id         Int        @id @default(autoincrement())
-  uuid       String     @unique
-  name       String
-  status     GameStatus @default(NOT_PLAYING)
-  started    DateTime
-  times      Time[]
-  mapId      Int?
-  playingMap Map?       @relation(fields: [mapId], references: [id])
+  id    Int    @id @default(autoincrement())
+  uuid  String @unique
+  name  String
+  games Game[]
 }
 
 model Time {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  createdAt DateTime @default(now())
-  time      Int
+  id     Int  @id @default(autoincrement())
+  time   Int
+  game   Game @relation(fields: [gameId], references: [id])
+  gameId Int
 }
