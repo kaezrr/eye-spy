@@ -1,11 +1,20 @@
 services:
+  backend:
+    image: eye-spy-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:latest
     container_name: postgres-db
     environment:
-      POSTGRES_DB: gamedb
-      POSTGRES_USER: kaezr
-      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
