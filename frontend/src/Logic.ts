@@ -1,54 +1,54 @@
 import { nanoid } from "nanoid";
 
 const apiUrl: string = import.meta.env.VITE_API_URL;
-type Status = {
-  name: string;
-  time: number;
-  map: string;
-  mapId: number;
-  status: "won" | "playing" | "not playing";
-};
 
-export async function getCharacters(mapId: string | undefined) {
-  // TODO: get characters from backend
-  return ["Waldo", "Woof", "Wenda", "Whitebeard", "Odlaw"];
+export async function getCharacters(): Promise<
+  {
+    name: string;
+    url: string;
+  }[]
+> {
+  const playerId = localStorage.getItem("id");
+  const response = await fetch(
+    `${apiUrl}/game/characters?playerId=${playerId}`,
+  );
+  return await response.json();
 }
 
 export async function checkPosition(
-  // TODO: check position from backend
   name: string,
   pos: { x: number; y: number },
 ) {
-  console.log(name, pos);
-  return true;
+  const playerId = localStorage.getItem("id") as string;
+  const response = await fetch(`${apiUrl}/game/check`, {
+    method: "PUT",
+    body: JSON.stringify({ playerId: playerId, who: name, x: pos.x, y: pos.y }),
+  });
+  const data: { result: boolean; message: string } = await response.json();
+
+  return data.result;
 }
 
-export async function getStatus(): Promise<Status> {
-  // TODO: check if user has won from backend
-  return {
-    name: "Anjishnu",
-    time: 983412374,
-    status: "won",
-    map: "The Unfriendly Giants",
-    mapId: 1,
-  };
+export async function getStatus(): Promise<{
+  map: string;
+  time: number | null;
+  finished: boolean;
+}> {
+  const playerId = localStorage.getItem("id");
+  const response = await fetch(`${apiUrl}/game/round?playerId=${playerId}`);
+  return await response.json();
 }
 
-export async function getMaps() {
-  return [
-    {
-      id: 1,
-      name: "The Unfriendly Giants",
-    },
-    {
-      id: 2,
-      name: "The Underground Hunters",
-    },
-    {
-      id: 3,
-      name: "Dinosaurs, Spacemen And Ghouls",
-    },
-  ];
+export async function getMaps(): Promise<
+  {
+    id: number;
+    url: string;
+    name: string;
+  }[]
+> {
+  const response = await fetch(`${apiUrl}/maps`);
+  const data = await response.json();
+  return data;
 }
 
 export function createUser(name: string) {
@@ -57,51 +57,20 @@ export function createUser(name: string) {
   localStorage.setItem("name", name);
 }
 
-export async function startUser() {
-  // TODO: start user timer in backend
+export async function startUser(mapId: string) {
   let userId = localStorage.getItem("id");
   let username = localStorage.getItem("name");
-  console.log(`game started for ${userId} - ${username}`);
-  // await fetch(`${apiUrl}/start`, {
-  //   method: "POST",
-  //   body: JSON.stringify({ name: username, id: userId }),
-  // });
+  await fetch(`${apiUrl}/game/start`, {
+    method: "POST",
+    body: JSON.stringify({ name: username, playerId: userId, mapId }),
+  });
 }
 
-type Score = {
+export async function getLeaderboard(mapId: string): Promise<{
   name: string;
-  time: number;
-};
-
-type Leaderboard = {
-  name: string;
-  scores: Score[];
-};
-
-export async function getLeaderboard(mapId: string): Promise<Leaderboard> {
-  // TODO: get leaderboard from backend according to map
-
-  return {
-    name: "The Unfriendly Giants",
-    scores: [
-      {
-        name: "John",
-        time: 909234235123,
-      },
-      {
-        name: "Mason",
-        time: 909234235123,
-      },
-      {
-        name: "Bogart",
-        time: 909234235123,
-      },
-      {
-        name: "Gray",
-        time: 909234235123,
-      },
-    ],
-  };
-
-  // await fetch(`${apiUrl}/leaderboard`);
+  scores: { name: string; time: number }[];
+}> {
+  const response = await fetch(`${apiUrl}/scores/${mapId}`);
+  const data = await response.json();
+  return data;
 }
