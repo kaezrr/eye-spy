@@ -2,6 +2,20 @@ import { PrismaClient } from "../generated/prisma";
 
 const prisma = new PrismaClient();
 
+function getAnswer(
+  mapId: number,
+  characterId: number,
+  posX: number,
+  posY: number,
+) {
+  return {
+    mapId,
+    characterId,
+    posX,
+    posY,
+  };
+}
+
 async function main() {
   await prisma.map.createMany({
     data: [
@@ -50,6 +64,28 @@ async function main() {
         name: "Odlaw",
         url: "/static/characters/Odlaw.webp",
       },
+    ],
+  });
+
+  await prisma.answer.createMany({
+    data: [
+      getAnswer(1, 1, 0, 0),
+      getAnswer(1, 2, 0, 0),
+      getAnswer(1, 3, 0, 0),
+      getAnswer(1, 4, 0, 0),
+      getAnswer(1, 5, 0, 0),
+
+      getAnswer(2, 1, 0, 0),
+      getAnswer(2, 2, 0, 0),
+      getAnswer(2, 3, 0, 0),
+      getAnswer(2, 4, 0, 0),
+      getAnswer(2, 5, 0, 0),
+
+      getAnswer(3, 1, 0, 0),
+      getAnswer(3, 2, 0, 0),
+      getAnswer(3, 3, 0, 0),
+      getAnswer(3, 4, 0, 0),
+      getAnswer(3, 5, 0, 0),
     ],
   });
 }

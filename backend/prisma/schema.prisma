@@ -33,19 +33,29 @@ model Answer {
 }
 
 model Character {
-  id     Int      @id @default(autoincrement())
-  name   String   @unique
-  url    String
-  Answer Answer[]
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  url             String
+  Answer          Answer[]
+  RoundCharacters RoundCharacters[]
 }
 
 model Round {
-  id        Int      @id @default(autoincrement())
-  userId    String
-  name      String
-  mapId     Int
-  map       Map      @relation(fields: [mapId], references: [id])
-  finished  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  time      Int?
+  id         Int               @id @default(autoincrement())
+  userId     String
+  name       String
+  mapId      Int
+  map        Map               @relation(fields: [mapId], references: [id])
+  finished   Boolean           @default(false)
+  createdAt  DateTime          @default(now())
+  time       Int?
+  characters RoundCharacters[]
+}
+
+model RoundCharacters {
+  id          Int       @id @default(autoincrement())
+  round       Round     @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  roundId     Int
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
 }
