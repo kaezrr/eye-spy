@@ -33,7 +33,7 @@ function Scores() {
     const time = intervalToDuration({ start: 0, end: score.time });
     return {
       ...score,
-      formatTime: `${time.hours}hrs ${time.minutes}mins ${time.seconds}secs`,
+      formatTime: `${time.hours ?? 0}hrs ${time.minutes ?? 0}mins ${time.seconds ?? 0}secs`,
     };
   });
 
@@ -45,11 +45,12 @@ function Scores() {
       <div className="grid grid-cols-[1fr_2fr_3fr] bg-indigo-800 p-2 text-2xl gap-2 rounded-lg border border-white">
         {scores.map((e, i) => (
           <Fragment key={i}>
-            <p>#{i}</p>
+            <p>#{i + 1}</p>
             <p>{e.name}</p>
             <p>{e.formatTime}</p>
           </Fragment>
         ))}
+        {scores.length === 0 && <h1>Its empty...</h1>}
       </div>
       <Link to="/">
         <button className="bg-green-700 hover:bg-green-600 transition rounded-lg py-2 px-8">

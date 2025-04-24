@@ -4,25 +4,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { intervalToDuration } from "date-fns";
 
 type Status = {
-  name: string;
-  time: number;
-  map: string;
-  status: "won" | "playing" | "not playing";
   mapId: number;
+  map: string;
+  time: number | null;
+  finished: boolean;
 };
 
 function Win() {
   const navigate = useNavigate();
-  const [status, setStatus] = useState<Status>();
+  const [status, setStatus] = useState<Status>({
+    mapId: 0,
+    map: "Default",
+    time: null,
+    finished: false,
+  });
+
   useEffect(() => {
     getStatus().then((res) => setStatus(res));
   }, []);
 
-  if (status?.status !== "won") {
+  if (status.finished) {
     navigate("/");
     return <></>;
   }
-  const score = intervalToDuration({ start: 0, end: status.time });
+
+  const score = intervalToDuration({ start: 0, end: status.time ?? 0 });
 
   return (
     <div className="flex flex-col bg-indigo-950 text-white items-center h-screen py-30 gap-20">

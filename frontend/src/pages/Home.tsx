@@ -6,7 +6,9 @@ import { useState, useEffect } from "react";
 function Home() {
   const navigate = useNavigate();
   const user = localStorage.getItem("name");
-  const [maps, setMaps] = useState<{ name: string; id: number }[]>([]);
+  const [maps, setMaps] = useState<{ name: string; id: number; url: string }[]>(
+    [],
+  );
 
   useEffect(() => {
     getMaps().then((res) => setMaps(res));

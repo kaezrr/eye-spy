@@ -30,6 +30,7 @@ export async function checkPosition(
 }
 
 export async function getStatus(): Promise<{
+  mapId: number;
   map: string;
   time: number | null;
   finished: boolean;
