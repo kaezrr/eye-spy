@@ -137,10 +137,11 @@ export async function getPlayerRound(req: Request, res: Response) {
   const round = await db.round.findFirst({
     where: { userId: playerId },
     orderBy: { createdAt: "desc" },
-    include: { map: { select: { name: true } } },
+    include: { map: { select: { id: true, name: true } } },
   });
 
   res.json({
+    mapId: round?.map.id,
     map: round?.map.name,
     time: round?.time,
     finished: round?.finished,
