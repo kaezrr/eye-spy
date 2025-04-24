@@ -23,7 +23,7 @@ function Win() {
     getStatus().then((res) => setStatus(res));
   }, []);
 
-  if (status.finished) {
+  if (!status.finished) {
     navigate("/");
     return <></>;
   }
@@ -37,7 +37,7 @@ function Win() {
       </h1>
       <h1 className="text-4xl font-bold flex items-center gap-[2%] w-full justify-center">
         Time taken:{" "}
-        {`${score.hours}hrs ${score.minutes}mins ${score.seconds}secs`}
+        {`${score.hours ?? 0}hrs ${score.minutes ?? 0}mins ${score.seconds ?? 0}secs`}
       </h1>
       <Link to={`/scores/${status.mapId}`}>
         <button className="bg-green-700 hover:bg-green-600 transition rounded-lg py-2 px-8">

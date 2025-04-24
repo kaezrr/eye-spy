@@ -5,11 +5,11 @@ import { startUser } from "../Logic";
 import { useParams } from "react-router-dom";
 
 function App() {
-  useEffect(() => {
-    startUser();
-  }, []);
-
   const { mapId } = useParams();
+
+  useEffect(() => {
+    startUser(mapId ?? "1");
+  }, []);
 
   return (
     <div className="flex flex-col">

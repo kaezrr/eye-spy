@@ -22,6 +22,7 @@ export async function checkPosition(
   const playerId = localStorage.getItem("id") as string;
   const response = await fetch(`${apiUrl}/game/check`, {
     method: "PUT",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ playerId: playerId, who: name, x: pos.x, y: pos.y }),
   });
   const data: { result: boolean; message: string } = await response.json();
@@ -63,7 +64,12 @@ export async function startUser(mapId: string) {
   let username = localStorage.getItem("name");
   await fetch(`${apiUrl}/game/start`, {
     method: "POST",
-    body: JSON.stringify({ name: username, playerId: userId, mapId }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: username,
+      playerId: userId,
+      mapId: parseInt(mapId),
+    }),
   });
 }
 
@@ -72,6 +78,16 @@ export async function getLeaderboard(mapId: string): Promise<{
   scores: { name: string; time: number }[];
 }> {
   const response = await fetch(`${apiUrl}/scores/${mapId}`);
+  const data = await response.json();
+  return data;
+}
+
+export async function getMapById(mapId: string): Promise<{
+  name: string;
+  id: number;
+  url: string;
+}> {
+  const response = await fetch(`${apiUrl}/maps/${mapId}`);
   const data = await response.json();
   return data;
 }

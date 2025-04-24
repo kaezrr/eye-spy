@@ -1,4 +1,8 @@
+import { useState, useEffect } from "react";
+import { getMapById } from "../Logic";
 import { useParams } from "react-router-dom";
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export function ImageWrapper({
   children,
@@ -10,10 +14,15 @@ export function ImageWrapper({
   onClick: (e: React.MouseEvent) => void;
 }) {
   const { mapId } = useParams();
-  const src = `/${mapId}.jpeg`;
+  const [map, setMap] = useState<{ name: string; id: number; url: string }>();
+
+  useEffect(() => {
+    getMapById(mapId ?? "0").then((res) => setMap(res));
+  });
+
   return (
     <div className="size-fit relative" ref={ref} onClick={onClick}>
-      <img src={src} className="w-[250vw] max-w-none" />
+      <img src={`${apiUrl}${map?.url}`} className="w-[250vw] max-w-none" />
       {children}
     </div>
   );

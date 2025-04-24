@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { checkPosition, getCharacters, getStatus } from "../Logic";
 import { useState, useEffect } from "react";
 
@@ -17,12 +17,13 @@ function getTransform(pos: Position): Position {
 }
 
 export function Finder({ pos, createMarker }: Props) {
-  const { mapId } = useParams();
-  const [characters, setCharacters] = useState<string[]>([]);
+  const [characters, setCharacters] = useState<{ name: string; url: string }[]>(
+    [],
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
-    getCharacters(mapId).then((res) => {
+    getCharacters().then((res) => {
       setCharacters(res);
     });
   }, []);
@@ -33,7 +34,7 @@ export function Finder({ pos, createMarker }: Props) {
     if (result) {
       createMarker(pos);
       const status = await getStatus();
-      if (status.status === "won") navigate("/won");
+      if (status.finished) navigate("/won");
     } else {
       alert("That's incorrect!");
     }
@@ -53,10 +54,10 @@ export function Finder({ pos, createMarker }: Props) {
       {characters.map((e) => (
         <button
           className="rounded-full border border-amber-400 hover:bg-amber-300 hover:text-black"
-          key={e}
+          key={e.name}
           onClick={handleOnClick}
         >
-          {e}
+          {e.name}
         </button>
       ))}
     </div>

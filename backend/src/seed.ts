@@ -46,21 +46,16 @@ async function main() {
       },
       {
         id: 2,
-        name: "Woof",
-        url: "/static/characters/Woof.webp",
-      },
-      {
-        id: 3,
         name: "Wenda",
         url: "/static/characters/Wenda.webp",
       },
       {
-        id: 4,
+        id: 3,
         name: "Whitebeard",
         url: "/static/characters/Whitebeard.webp",
       },
       {
-        id: 5,
+        id: 4,
         name: "Odlaw",
         url: "/static/characters/Odlaw.webp",
       },
@@ -69,23 +64,20 @@ async function main() {
 
   await prisma.answer.createMany({
     data: [
-      getAnswer(1, 1, 0, 0),
-      getAnswer(1, 2, 0, 0),
-      getAnswer(1, 3, 0, 0),
-      getAnswer(1, 4, 0, 0),
-      getAnswer(1, 5, 0, 0),
+      getAnswer(1, 1, 18, 66), // Waldo
+      getAnswer(1, 2, 69, 79), // Wenda
+      getAnswer(1, 3, 96, 77), // Whitebeard
+      getAnswer(1, 4, 58, 90), // Odlaw
 
-      getAnswer(2, 1, 0, 0),
-      getAnswer(2, 2, 0, 0),
-      getAnswer(2, 3, 0, 0),
-      getAnswer(2, 4, 0, 0),
-      getAnswer(2, 5, 0, 0),
+      getAnswer(2, 1, 86, 40),
+      getAnswer(2, 2, 70, 5),
+      getAnswer(2, 3, 63, 35),
+      getAnswer(2, 4, 16, 4),
 
-      getAnswer(3, 1, 0, 0),
-      getAnswer(3, 2, 0, 0),
-      getAnswer(3, 3, 0, 0),
-      getAnswer(3, 4, 0, 0),
-      getAnswer(3, 5, 0, 0),
+      getAnswer(3, 1, 91, 55),
+      getAnswer(3, 2, 83, 58),
+      getAnswer(3, 3, 67, 72),
+      getAnswer(3, 4, 5, 49),
     ],
   });
 }

@@ -39,8 +39,9 @@ export function Display() {
   return (
     <div className="h-[92vh] w-full overflow-scroll bg-indigo-950 object-cover">
       <ImageWrapper ref={imgRef} onClick={handleClick}>
-        {markers.map((m) => (
+        {markers.map((m, i) => (
           <FaLocationPin
+            key={i}
             className="absolute text-red-600 -translate-x-1/2 -translate-y-full"
             style={{
               top: `${m.y}%`,
